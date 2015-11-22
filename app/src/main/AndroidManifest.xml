@@ -19,6 +19,8 @@
         </activity>
         <activity android:name=".Find" >
         </activity>
+        <activity android:name=".View" >
+        </activity>
     </application>
 
 </manifest>

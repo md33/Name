@@ -115,7 +115,7 @@ public class Names extends AppCompatActivity {
         spinnerArray.add(0, "Монгол");
         spinnerArray.add(1, "Модерн");
         spinnerArray.add(2, "Төвд");
-        spinnerArray.add(3, "Түүгийн");
+        spinnerArray.add(3, "Түүхийн");
         spinnerArray.add(4, "Самгард");
         ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(this,
                 android.R.layout.simple_spinner_dropdown_item,
@@ -136,9 +136,20 @@ public class Names extends AppCompatActivity {
                 comment = Comment.getText().toString();
                 gender = check_gender();
                 national = National.getSelectedItem().toString();
-                insert();
+
+                int name =  db.check_name(Names.getText().toString());
+                Log.w("MyApp","Checkkk"+String.valueOf(name));
+//                if(name != 0) {
+                    insert();
 //                main();
-                check();
+                    check();
+//                }
+//                else
+//                {
+//                    Toast toast = Toast.makeText(getApplicationContext(), "Энэ нэр байгаа учир" +
+//                            " нэмэх боломжгүй", Toast.LENGTH_LONG);
+//                    toast.show();
+//                }
             }
         });
         builder.setNegativeButton("Цуцлах", new DialogInterface.OnClickListener() {
@@ -157,7 +168,7 @@ public class Names extends AppCompatActivity {
             Toast toast = Toast.makeText(getApplicationContext(), "Амжилттай нэмэгдлээ", Toast.LENGTH_LONG);
             toast.show();
         } catch (Exception ex) {
-            Log.w("MyApp", ex.toString());
+            Log.w("MyApp","ada"+ ex.toString());
         }
     }
 
@@ -208,11 +219,11 @@ public class Names extends AppCompatActivity {
                 Log.w("MyApp", "LIST" + list1.toString());
 
 
-                value = "VALUEEEE Id: " + cn.getId() + " -Name: " + cn.getName() + "-Comment: " + cn.getGender() + " -Gender: " + cn.getNational() + " -National: " + cn.getComment()
+                value = "VALUEEEE Id: " + cn.getId() + " -Name: " + cn.getName() + "-Comment: " + cn.getComment() + " -Gender: " + cn.getGender() + " -National: " + cn.getNational()
                         + "-Creator: " + cn.getCreator() + "";
                 Toast toast = Toast.makeText(getApplicationContext(), value, Toast.LENGTH_LONG);
                 Log.w("MyApp", value);
-                toast.show();
+//                toast.show();
             }
         }
         catch (Exception ex){
@@ -221,6 +232,19 @@ public class Names extends AppCompatActivity {
         final StableArrayAdapter adapter = new StableArrayAdapter(this,
                 android.R.layout.simple_list_item_1, list1);
         all.setAdapter(adapter);
+        all.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.i("MyApp", "You clicked View : " + view + " Item: " + id + " at position:" + position);
+                Intent intent = new Intent();
+                intent.setClassName("com.example.md.givename", "com.example.md.givename.View");
+                intent.putExtra("id", String.valueOf(id));
+                startActivity(intent);
+
+            }
+        });
+
+
     }
     private class StableArrayAdapter extends ArrayAdapter<String> {
 
