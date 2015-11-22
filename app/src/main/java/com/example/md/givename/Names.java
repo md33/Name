@@ -27,7 +27,11 @@ import android.widget.Spinner;
 import android.widget.TabHost;
 import android.widget.Toast;
 
+import org.w3c.dom.NameList;
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -53,9 +57,9 @@ public class Names extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_names);
-        db= new DatabaseHandler(this);
-        mine = (ListView)findViewById(R.id.listView2);
-        all = (ListView)findViewById(R.id.listView);
+        db = new DatabaseHandler(this);
+        mine = (ListView) findViewById(R.id.listView2);
+        all = (ListView) findViewById(R.id.listView);
         tabHost = (TabHost) findViewById(R.id.tabHost);
         tabHost.setup();
 
@@ -133,7 +137,8 @@ public class Names extends AppCompatActivity {
                 gender = check_gender();
                 national = National.getSelectedItem().toString();
                 insert();
-                main();
+//                main();
+                check();
             }
         });
         builder.setNegativeButton("Цуцлах", new DialogInterface.OnClickListener() {
@@ -144,42 +149,89 @@ public class Names extends AppCompatActivity {
         });
         builder.show();
 
-        }
+    }
 
-    public void insert(){
-            try {
-                db.InsertName(new Name(name, comment, gender, national, creator));
-                Toast toast = Toast.makeText(getApplicationContext(), "Амжилттай нэмэгдлээ", Toast.LENGTH_LONG);
-                toast.show();
-            }
-            catch (Exception ex)
-            {
-                Log.w("MyApp", ex.toString());
-            }
+    public void insert() {
+        try {
+            db.InsertName(new Name(name, comment, gender, national, creator));
+            Toast toast = Toast.makeText(getApplicationContext(), "Амжилттай нэмэгдлээ", Toast.LENGTH_LONG);
+            toast.show();
+        } catch (Exception ex) {
+            Log.w("MyApp", ex.toString());
         }
-    public String check_gender(){
-            if(Male.isChecked() ==true)
-                    return "Male";
-            else
-                return "Female";
-        }
-    public void main(){
+    }
+
+    public String check_gender() {
+        if (Male.isChecked() == true)
+            return "Male";
+        else
+            return "Female";
+    }
+
+    public void main() {
         Intent intent = new Intent();
         intent.setClassName("com.example.md.givename", "com.example.md.givename.MainActivity");
         startActivity(intent);
     }
+
     public void check() {
+        List<String> list1 = null;
+//        try {
+//            Cursor cursor = db.ALL();
+//            String[] row = new String[]{db.NAME};
+//            int[] nu = new int[]{R.id.plus};
+//            SimpleCursorAdapter simpleCursorAdapter;
+//            simpleCursorAdapter = new SimpleCursorAdapter(getBaseContext(), R.layout.row, cursor, row, nu, 0);
+//            all.setAdapter(simpleCursorAdapter);
+//        } catch (Exception ex) {
+//            Log.w("MyApp", ex.toString());
+//        }
         try {
-            ArrayList<Name>list = (ArrayList<Name>) db.AllName();
+            List<Name> nameList = db.AllName();
+            String value = null;
 
-            ArrayAdapter adapter = new ArrayAdapter<Name>(this, R.layout.activity_names,list);
+            int id = 0, i = 0;
+            ArrayList<String> list = null;
 
-            SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(this,R.layout.row,db.ALL(),null,null,0);
-            all.setAdapter(cursorAdapter);
+            for (Name cn : nameList) {
+                id = cn.getId();
+            }
+            Log.w("MyApp", "id = " + id + "");
+            String[] s = new String[id];
+            for (Name cn : nameList) {
+
+                s[i] = cn.getName();
+                i++;
+
+                list1 = Arrays.asList(s);
+
+                Log.w("MyApp", "LIST" + list1.toString());
+
+
+                value = "VALUEEEE Id: " + cn.getId() + " -Name: " + cn.getName() + "-Comment: " + cn.getGender() + " -Gender: " + cn.getNational() + " -National: " + cn.getComment()
+                        + "-Creator: " + cn.getCreator() + "";
+                Toast toast = Toast.makeText(getApplicationContext(), value, Toast.LENGTH_LONG);
+                Log.w("MyApp", value);
+                toast.show();
+            }
         }
-        catch (Exception ex)
-        {
+        catch (Exception ex){
             Log.w("MyApp",ex.toString());
+        }
+        final StableArrayAdapter adapter = new StableArrayAdapter(this,
+                android.R.layout.simple_list_item_1, list1);
+        all.setAdapter(adapter);
+    }
+    private class StableArrayAdapter extends ArrayAdapter<String> {
+
+        HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
+
+        public StableArrayAdapter(Context context, int textViewResourceId,
+                                  List<String> objects) {
+            super(context, textViewResourceId, objects);
+            for (int i = 0; i < objects.size(); ++i) {
+                mIdMap.put(objects.get(i), i);
+            }
         }
     }
 }

@@ -11,15 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "GIVENAME";
-    private static final String TABLE_NAME = "NAMES";
-    private static final String NAME_ID = "ID";
-    private static final String NAME = "NAME";
-    private static final String COMMENT = "COMMENT";
-    private static final String GENDER = "GENDER";
-    private static final String NATIONAL = "NATIONAL";
-    private static final String CREATOR = "CREATOR";
+    public static final int DATABASE_VERSION = 1;
+    public static final String DATABASE_NAME = "GIVENAME";
+    public static final String TABLE_NAME = "NAMES";
+    public static final String NAME_ID = "ID";
+    public static final String NAME = "NAME";
+    public static final String COMMENT = "COMMENT";
+    public static final String GENDER = "GENDER";
+    public static final String NATIONAL = "NATIONAL";
+    public static final String CREATOR = "CREATOR";
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -48,7 +48,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         contentValues.put(GENDER,name.getGender());
         contentValues.put(NATIONAL,name.getNational());
         contentValues.put(CREATOR,name.getCreator());
+        Log.w("MyApp",contentValues.toString());
         db.insert(TABLE_NAME, null, contentValues);
+
         db.close();
     }
     public int UpdateName(Name name,int id){
@@ -74,7 +76,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             if(cursor.moveToFirst()) {
                 do {
                     Name name = new Name();
-//                    name.setId(Integer.parseInt(cursor.getString(0)));
+                    name.setId(Integer.parseInt(cursor.getString(0)));
                     name.setName(cursor.getString(1));
                     name.setComment(cursor.getString(2));
                     name.setGender(cursor.getString(3));
@@ -129,5 +131,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
         db.close();
         return nameList;
+    }
+    public Cursor queueAll(){
+        String[] columns = new String[]{NAME_ID, NAME};
+       SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_NAME, columns,
+                null, null, null, null, null);
+
+        return cursor;
     }
 }
