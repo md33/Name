@@ -171,20 +171,17 @@ public class Names extends AppCompatActivity {
             Log.w("MyApp","ada"+ ex.toString());
         }
     }
-
     public String check_gender() {
         if (Male.isChecked() == true)
             return "Male";
         else
             return "Female";
     }
-
     public void main() {
         Intent intent = new Intent();
         intent.setClassName("com.example.md.givename", "com.example.md.givename.MainActivity");
         startActivity(intent);
     }
-
     public void check() {
         List<String> list1 = null;
 //        try {

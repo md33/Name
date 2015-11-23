@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:text="Хүү"
         android:id="@+id/male"
-        android:checked="true"
+        android:checked="false"
         android:textSize="25dp"
         android:layout_alignTop="@+id/textView4"
         android:layout_alignStart="@+id/textView3" />

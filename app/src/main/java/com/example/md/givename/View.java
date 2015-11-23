@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -58,6 +57,8 @@ public class View extends AppCompatActivity {
 
                 }
                 break;
+            case R.id.delete:
+
             case R.id.back:
                 finish();
                 break;

@@ -27,15 +27,15 @@
         android:textColor="#000000"
         android:layout_below="@+id/textView"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="15dp" />
+        android:layout_marginTop="10dp" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/name"
-        android:layout_alignTop="@+id/textView"
+        android:layout_alignBottom="@+id/textView"
         android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/textView" />
+        android:layout_toEndOf="@+id/male" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -53,7 +53,7 @@
         android:id="@+id/male"
         android:layout_below="@+id/comment"
         android:layout_alignParentStart="true"
-        android:textSize="25dp"
+        android:textSize="20dp"
         android:checked="false" />
 
     <RadioButton
@@ -63,7 +63,7 @@
         android:id="@+id/female"
         android:layout_alignTop="@+id/male"
         android:layout_alignStart="@+id/name"
-        android:textSize="25dp"
+        android:textSize="20dp"
         android:checked="false" />
 
     <Spinner
@@ -71,8 +71,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/spinner"
         android:layout_below="@+id/male"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp" />
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -90,17 +89,23 @@
         android:id="@+id/change"
         android:layout_below="@+id/spinner"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp"
         android:onClick="onClick"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Устгах"
+        android:id="@+id/delete"
+        android:onClick="onClick"
+        android:layout_below="@+id/change"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Буцах"
         android:id="@+id/back"
-        android:layout_below="@+id/change"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:onClick="onClick"/>
+        android:layout_below="@+id/delete"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
