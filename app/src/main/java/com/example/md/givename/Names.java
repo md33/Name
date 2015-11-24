@@ -49,7 +49,7 @@ public class Names extends AppCompatActivity {
     public RadioButton Male;
     public RadioButton Female;
     public SimpleCursorAdapter dataAdapter;
-
+    public List<String> list1 = null;
     ListView mine, all;
 
 
@@ -183,7 +183,7 @@ public class Names extends AppCompatActivity {
         startActivity(intent);
     }
     public void check() {
-        List<String> list1 = null;
+
 //        try {
 //            Cursor cursor = db.ALL();
 //            String[] row = new String[]{db.NAME};
@@ -235,7 +235,8 @@ public class Names extends AppCompatActivity {
                 Log.i("MyApp", "You clicked View : " + view + " Item: " + id + " at position:" + position);
                 Intent intent = new Intent();
                 intent.setClassName("com.example.md.givename", "com.example.md.givename.View");
-                intent.putExtra("id", String.valueOf(id));
+                String ner = list1.get((int) id).toString();
+                intent.putExtra("name",ner);
                 startActivity(intent);
 
             }

@@ -138,11 +138,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return nameList;
 
     }
-    public List<Name> getUserInformation(int id) {
+    public List<Name> getUserInformation(String named) {
         List<Name> nameList = new ArrayList<Name>();
         SQLiteDatabase db = this.getWritableDatabase();
         try {
-            String query = "SELECT * FROM " + TABLE_NAME + " WHERE iD = '"+id+"'";
+            String query = "SELECT * FROM " + TABLE_NAME + " WHERE NAME = '"+named+"'";
             Cursor cursor = db.rawQuery(query, null);
             if (cursor.moveToFirst()) {
                 do {
