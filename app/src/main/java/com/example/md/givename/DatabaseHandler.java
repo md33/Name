@@ -61,11 +61,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         contentValues.put(GENDER, name.getGender());
         contentValues.put(NATIONAL, name.getNational());
         contentValues.put(CREATOR, name.getCreator());
-        return db.update(DATABASE_NAME,contentValues,NAME_ID + "=" + id , null);
+        return db.update(TABLE_NAME,contentValues,NAME_ID + "=" + id , null);
     }
-    public int DeleteName(Name name ,int id){
+    public int DeleteName(  int id){
         SQLiteDatabase db = this.getWritableDatabase();
-        return  db.delete(DATABASE_NAME, NAME_ID + "=" + id, null);
+        return  db.delete(TABLE_NAME, NAME_ID + "=" + id, null);
     }
     public List<Name> AllName(){
         List<Name> nameList = new ArrayList<Name>();
@@ -101,7 +101,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             SQLiteDatabase db = getReadableDatabase();
             return db.rawQuery("select "+NAME_ID+" as _id ,"+NAME+" , "+GENDER+" from "+TABLE_NAME+"", null);
         }
-
+    public Cursor getDetail()
+    {
+        SQLiteDatabase db = getReadableDatabase();
+        return db.rawQuery("select "+NAME_ID+" as _id ,"+NAME+" , "+GENDER+" from "+TABLE_NAME+" WHERE "+CREATOR+" = 'user' ", null);
+    }
 
     public List<Name> selectUser(String gender, String creator, String national) {
         Log.w("MyApp", "DB");
@@ -116,7 +120,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     Name name = new Name();
                     name.setId(Integer.parseInt(cursor.getString(0)));
                     name.setName(cursor.getString(1));
-                    Log.w("MyApp", name.getName());
+
                     name.setGender(cursor.getString(2));
                     name.setNational(cursor.getString(3));
                     name.setComment(cursor.getString(4));
@@ -130,7 +134,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         {
             Log.w("MyApp", ex.toString());
         }
-        Log.w("MyApp",nameList.toString());
+        Log.w("MyApp", nameList.toString());
         return nameList;
 
     }
@@ -176,5 +180,27 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             Log.i("MyApp", "okey");
         }
         return id;
+    }
+    public List<Name> all( ) {
+        List<Name> nameList = new ArrayList<Name>();
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            String query = "SELECT * FROM " + TABLE_NAME + "";
+            Cursor cursor = db.rawQuery(query, null);
+            if (cursor.moveToFirst()) {
+                do {
+                    Name name = new Name();
+                    name.setId(Integer.parseInt(cursor.getString(0)));
+                    name.setName(cursor.getString(1));
+                    name.setGender(cursor.getString(3));
+                    nameList.add(name);
+                } while (cursor.moveToNext());
+            }
+            return nameList;
+        } catch (Exception ex) {
+            Log.v("MyApp", ex.getMessage());
+        }
+        db.close();
+        return nameList;
     }
 }

@@ -167,6 +167,7 @@ public class Find extends Activity implements SensorEventListener{
         Intent shake = new Intent();
             shake.setClassName("com.example.md.givename", "com.example.md.givename.View");
             shake.putExtra("name", String.valueOf(random));
+            shake.putExtra("activity","FIND");
             Log.w("MyApp","random"+random.toString());
             startActivity(shake);
 

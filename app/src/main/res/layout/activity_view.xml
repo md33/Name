@@ -56,21 +56,21 @@
         android:layout_height="wrap_content"
         android:text="Нэр"
         android:id="@+id/name"
-        android:textSize="30dp"
+        android:textSize="10dp"
         android:layout_below="@+id/textView"
         android:layout_alignStart="@+id/textView"
         android:layout_marginTop="3dp"
-        android:layout_marginLeft="-20dp" />
+        android:layout_marginLeft="-5dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="   Нэр"
         android:id="@+id/national"
-        android:textSize="30dp"
+        android:textSize="10dp"
         android:layout_alignBottom="@+id/name"
         android:layout_alignStart="@+id/textView3"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="50dp"
         android:layout_alignEnd="@+id/comment"
         android:layout_marginRight="-10dp" />
 
@@ -78,12 +78,41 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/comment"
-        android:textSize="15dp"
+        android:textSize="10dp"
         android:layout_below="@+id/textView3"
         android:layout_alignStart="@+id/textView3"
         android:layout_marginLeft="-25dp"
         android:layout_marginRight="-10dp"
         android:minHeight="80dp"
         android:layout_alignEnd="@+id/textView3" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:maxHeight="30dp"
+        android:maxWidth="30dp"
+        android:minHeight="30dp"
+        android:minWidth="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/editt"
+        android:onClick="onClick"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/remove"
+        android:maxHeight="30dp"
+        android:maxWidth="30dp"
+        android:minHeight="30dp"
+        android:minWidth="30dp"
+        android:background="@drawable/removee"
+        android:layout_alignTop="@+id/edit"
+        android:layout_alignEnd="@+id/national"
+        android:layout_marginRight="15dp"
+        android:onClick="onClick"/>
+
 
 </RelativeLayout>

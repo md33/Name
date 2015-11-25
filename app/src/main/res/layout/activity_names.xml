@@ -5,29 +5,32 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.example.md.givename.Names">
+    tools:context="com.example.md.givename.Names"
+    android:background="@drawable/find">
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/insert"
-        android:background="@mipmap/plus"
-        android:layout_marginLeft="20dp"
+        android:background="@drawable/button"
+        android:layout_marginLeft="10dp"
         android:minHeight="30dp"
         android:minWidth="30dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
         android:onClick="onClick"
-        android:layout_marginTop="10dp"
-        android:layout_alignParentLeft="false"
-        android:layout_alignParentBottom="false" />
+        android:maxHeight="30dp"
+        android:maxWidth="30dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignTop="@+id/searchView"
+        android:layout_alignEnd="@+id/tabHost"
+        android:layout_marginTop="10dp" />
 
     <TabHost
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/tabHost"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/insert">
+        android:layout_below="@+id/insert"
+        android:background="@drawable/find">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -79,9 +82,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/searchView"
-        android:layout_marginLeft="10dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="29dp" />
+        android:layout_toStartOf="@+id/insert"
+        android:layout_marginRight="-18dp" />
 
 </RelativeLayout>

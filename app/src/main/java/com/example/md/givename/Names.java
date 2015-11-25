@@ -6,16 +6,20 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.TextUtils;
+import android.text.method.CharacterPickerDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -23,6 +27,8 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.SearchView;
+import android.widget.SimpleAdapter;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TabHost;
@@ -39,7 +45,7 @@ import java.util.List;
 
 
 
-public class Names extends Activity {
+public class Names extends Activity implements  SearchView.OnQueryTextListener{
     public TabHost tabHost;
     public String name = null;
     public String comment = null;
@@ -53,7 +59,8 @@ public class Names extends Activity {
     public RadioButton Female;
     public SimpleCursorAdapter adapter;
     public List<String> list1 = null;
-    ListView mine, all;
+    public ListView mine, all;
+    public SearchView mSearchView;
 
 
     @Override
@@ -63,6 +70,8 @@ public class Names extends Activity {
         db = new DatabaseHandler(this);
         mine = (ListView) findViewById(R.id.listView2);
         all = (ListView) findViewById(R.id.listView);
+        mSearchView = (SearchView)findViewById(R.id.searchView);
+        all.setTextFilterEnabled(true);
         tabHost = (TabHost) findViewById(R.id.tabHost);
         tabHost.setup();
 
@@ -77,6 +86,7 @@ public class Names extends Activity {
         tabHost.addTab(spec1);
         tabHost.addTab(spec2);
         check();
+        setupSearchView();
 
     }
 
@@ -140,12 +150,16 @@ public class Names extends Activity {
                 gender = check_gender();
                 national = National.getSelectedItem().toString();
 
-                int name =  db.check_name(Names.getText().toString());
+                int named =  db.check_name(Names.getText().toString());
                 Log.w("MyApp","Checkkk"+String.valueOf(name));
-//                if(name != 0) {
+
+                if(name != "" && comment != "")
+                {
+
                     insert();
-//                main();
-//                    check();
+
+                    check();
+                }
 //                }
 //                else
 //                {
@@ -168,17 +182,22 @@ public class Names extends Activity {
     public void insert() {
         try {
             db.InsertName(new Name(name, comment, gender, national, creator));
-            Toast toast = Toast.makeText(getApplicationContext(), "Амжилттай нэмэгдлээ", Toast.LENGTH_LONG);
-            toast.show();
+
         } catch (Exception ex) {
             Log.w("MyApp","ada"+ ex.toString());
+            Toast toast = Toast.makeText(getApplicationContext(), "Амжилттай нэмэгдлээ", Toast.LENGTH_LONG);
+            toast.show();
         }
     }
     public String check_gender() {
-        if (Male.isChecked() == true)
-            return "Male";
-        else
-            return "Female";
+        String gender=null;
+        if(Male.isChecked() != false && Female.isChecked() !=false) {
+            if (Male.isChecked() == true)
+                gender = "Хүү";
+            else
+                gender = "Охин";
+        }
+        return gender;
     }
     public void main() {
         Intent intent = new Intent();
@@ -207,21 +226,101 @@ public class Names extends Activity {
         all.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-
+                TextView c = (TextView) view.findViewById(R.id.pp);
+                String named = c.getText().toString();
                 Intent intent = new Intent();
                 intent.setClassName("com.example.md.givename", "com.example.md.givename.View");
-                Log.w("MyApp", "Parent" + parent.toString());
-                Log.w("MyApp", "position"+ String.valueOf(position));
-//                all.selected
+                intent.putExtra("name", named);
+                intent.putExtra("activity", "NAMES");
+                startActivity(intent);
+            }
+        });
+        Cursor cursor1 = db.getDetail();
 
-                Log.w("MyApp", "id"+ "");
-                Log.w("MyApp","");
-//                intent.putExtra("id", String.valueOf(position));
-//                startActivity(intent);
+        if (cursor1 != null)
+
+            adapter =
+                    new SimpleCursorAdapter(this,
+                            R.layout.row,
+                            cursor,
+                            new String[]{
+                                    "NAME", "GENDER"
+                            },
+                            new int[]{R.id.pp, R.id.dd},
+                            1);
+
+
+        mine.setAdapter(adapter);
+
+        mine.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView c = (TextView) view.findViewById(R.id.pp);
+                String named = c.getText().toString();
+                Intent intent = new Intent();
+                intent.setClassName("com.example.md.givename", "com.example.md.givename.View");
+                intent.putExtra("name", named);
+                intent.putExtra("activity", "NAMES");
+                startActivity(intent);
             }
         });
 
+    }
+//    public void check(){
+//        String[] from = new String[] {"ID","NAME", "GENDER"};
+//        int[] to = new int[] {R.id.id, R.id.pp, R.id.dd };
+//        final List<HashMap<String, String>> fillMaps = new ArrayList<HashMap<String, String>>();
+//        List<Name>xxa=db.all();
+//        for(Name cd :xxa) {
+//
+//            HashMap<String, String> map = new HashMap<String, String>();
+//            map.put("ID", String.valueOf(cd.getId()));
+//            map.put("NAME", cd.getName());
+//            map.put("GENDER", cd.getNational());
+//
+//            fillMaps.add(map);
+//
+//        }
+//        SimpleAdapter adapter = new SimpleAdapter(this, fillMaps, R.layout.row, from, to);
+//        all.setAdapter(adapter);
+//        all.setOnItemClickListener(new OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Toast toast = Toast.makeText(getApplicationContext(), parent.toString() + view.toString() + String.valueOf(position)+String.valueOf(id), Toast.LENGTH_LONG);
+//                    toast.show();
+//
+//
+//
+//            }
+//        });
+//    }
+    private void setupSearchView() {
+        try {
 
+
+            mSearchView.setIconifiedByDefault(false);
+            mSearchView.setOnQueryTextListener(this);
+            mSearchView.setSubmitButtonEnabled(true);
+            mSearchView.setQueryHint("Хайх...");
+        }
+        catch (Exception ex)
+        {
+            Log.i("MyApp",ex.toString());
+        }
+}
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        if (TextUtils.isEmpty(newText)) {
+            all.clearTextFilter();
+        } else {
+            all.setFilterText(newText.toString());
+        }
+        return true;
     }
 }

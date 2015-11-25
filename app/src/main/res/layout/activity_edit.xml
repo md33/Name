@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.example.md.givename.Edit"
+    android:background="@drawable/view">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Нэр :"
+        android:id="@+id/textView4"
+        android:layout_marginTop="60dp"
+        android:textStyle="bold"
+        android:textSize="30dp"
+        android:layout_marginStart="46dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/name"
+        android:layout_alignBottom="@+id/textView4"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/textView4"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Хүйс :"
+        android:id="@+id/textView5"
+        android:textStyle="bold"
+        android:textSize="30dp"
+        android:layout_below="@+id/name"
+        android:layout_alignStart="@+id/textView4"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="-10dp" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:layout_alignTop="@+id/textView5"
+        android:layout_alignStart="@+id/name"
+        android:layout_alignEnd="@+id/name" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Төрөл :"
+        android:id="@+id/textView6"
+        android:textStyle="bold"
+        android:textSize="30dp"
+        android:layout_marginLeft="-10dp"
+        android:layout_below="@+id/spinner"
+        android:layout_alignStart="@+id/textView5" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner2"
+        android:layout_alignTop="@+id/textView6"
+        android:layout_alignEnd="@+id/spinner"
+        android:layout_toEndOf="@+id/textView6" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Тайлбар :"
+        android:id="@+id/textView7"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_marginLeft="-10dp"
+        android:layout_below="@+id/spinner2"
+        android:layout_alignStart="@+id/textView5" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/comment"
+        android:layout_alignEnd="@+id/spinner"
+        android:layout_alignStart="@+id/spinner2"
+        android:minHeight="70dp"
+        android:layout_below="@+id/spinner2" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Өөрчлөх"
+        android:id="@+id/change"
+        android:layout_below="@+id/comment"
+        android:layout_alignStart="@+id/comment"
+        android:layout_alignEnd="@+id/comment" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Буцах"
+        android:id="@+id/back"
+        android:layout_below="@+id/change"
+        android:layout_alignEnd="@+id/change"
+        android:layout_alignStart="@+id/change" />
+
+</RelativeLayout>
