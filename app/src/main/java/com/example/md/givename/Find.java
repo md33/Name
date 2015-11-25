@@ -1,5 +1,6 @@
 package com.example.md.givename;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Find extends AppCompatActivity implements SensorEventListener{
+public class Find extends Activity implements SensorEventListener{
     SensorManager sm;
     public DatabaseHandler db;
     public Spinner name , type,gender;
@@ -63,10 +64,11 @@ public class Find extends AppCompatActivity implements SensorEventListener{
                 Log.w("MyApp", "ASD  GENDER : " + gen + " NAME : " + name + " TYPE : " + type + "");
                 find(gen.toString(), name.toString(), type.toString());
                 state=1;
-                Toast toast = Toast.makeText(getApplicationContext(),"Ta утсаа сэгсэрнэ үү !", Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(getApplicationContext(),"Ta утсаа сэгсэрнэ үү !", Toast.LENGTH_SHORT);
                     toast.show();
                 Intent intent = new Intent(this,Shake.class);
                 startActivity(intent);
+
                 break;
         }
     }
@@ -85,6 +87,7 @@ public class Find extends AppCompatActivity implements SensorEventListener{
         ArrayList<String> spinnerArray1 = new ArrayList<String>();
         spinnerArray1.add(0, "Бүх нэрс");
         spinnerArray1.add(1, "Миний нэрс");
+
         ArrayAdapter spinnerArrayAdapter1 = new ArrayAdapter(this,
                 android.R.layout.simple_spinner_dropdown_item,
                 spinnerArray1);

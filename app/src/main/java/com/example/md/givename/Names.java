@@ -1,5 +1,6 @@
 package com.example.md.givename;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -25,10 +26,12 @@ import android.widget.RadioGroup;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TabHost;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.w3c.dom.NameList;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -36,7 +39,7 @@ import java.util.List;
 
 
 
-public class Names extends AppCompatActivity {
+public class Names extends Activity {
     public TabHost tabHost;
     public String name = null;
     public String comment = null;
@@ -48,7 +51,7 @@ public class Names extends AppCompatActivity {
     public DatabaseHandler db = null;
     public RadioButton Male;
     public RadioButton Female;
-    public SimpleCursorAdapter dataAdapter;
+    public SimpleCursorAdapter adapter;
     public List<String> list1 = null;
     ListView mine, all;
 
@@ -67,7 +70,6 @@ public class Names extends AppCompatActivity {
         spec1.setContent(R.id.listView);
         spec1.setIndicator("Бүх нэрс");
 
-
         TabHost.TabSpec spec2 = tabHost.newTabSpec("TAB2");
         spec2.setIndicator("Миний нэрс");
         spec2.setContent(R.id.listView2);
@@ -75,6 +77,7 @@ public class Names extends AppCompatActivity {
         tabHost.addTab(spec1);
         tabHost.addTab(spec2);
         check();
+
     }
 
     public void onClick(View view) {
@@ -142,7 +145,7 @@ public class Names extends AppCompatActivity {
 //                if(name != 0) {
                     insert();
 //                main();
-                    check();
+//                    check();
 //                }
 //                else
 //                {
@@ -184,76 +187,41 @@ public class Names extends AppCompatActivity {
     }
     public void check() {
 
-//        try {
-//            Cursor cursor = db.ALL();
-//            String[] row = new String[]{db.NAME};
-//            int[] nu = new int[]{R.id.plus};
-//            SimpleCursorAdapter simpleCursorAdapter;
-//            simpleCursorAdapter = new SimpleCursorAdapter(getBaseContext(), R.layout.row, cursor, row, nu, 0);
-//            all.setAdapter(simpleCursorAdapter);
-//        } catch (Exception ex) {
-//            Log.w("MyApp", ex.toString());
-//        }
-        try {
-            List<Name> nameList = db.AllName();
-            String value = null;
+        Cursor cursor = db.getDetails();
 
-            int id = 0, i = 0;
-            ArrayList<String> list = null;
+        if (cursor != null)
 
-            for (Name cn : nameList) {
-                id = cn.getId();
-            }
-            Log.w("MyApp", "id = " + id + "");
-            String[] s = new String[id];
-            for (Name cn : nameList) {
-
-                s[i] = cn.getName();
-                i++;
-
-                list1 = Arrays.asList(s);
-
-                Log.w("MyApp", "LIST" + list1.toString());
+            adapter =
+                    new SimpleCursorAdapter(this,
+                            R.layout.row,
+                            cursor,
+                            new String[]{
+                                    "NAME", "GENDER"
+                            },
+                            new int[]{R.id.pp, R.id.dd},
+                            1);
 
 
-                value = "VALUEEEE Id: " + cn.getId() + " -Name: " + cn.getName() + "-Comment: " + cn.getComment() + " -Gender: " + cn.getGender() + " -National: " + cn.getNational()
-                        + "-Creator: " + cn.getCreator() + "";
-                Toast toast = Toast.makeText(getApplicationContext(), value, Toast.LENGTH_LONG);
-                Log.w("MyApp", value);
-//                toast.show();
-            }
-        }
-        catch (Exception ex){
-            Log.w("MyApp",ex.toString());
-        }
-        final StableArrayAdapter adapter = new StableArrayAdapter(this,
-                android.R.layout.simple_list_item_1, list1);
         all.setAdapter(adapter);
+
         all.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.i("MyApp", "You clicked View : " + view + " Item: " + id + " at position:" + position);
+
+
                 Intent intent = new Intent();
                 intent.setClassName("com.example.md.givename", "com.example.md.givename.View");
-                String ner = list1.get((int) id).toString();
-                intent.putExtra("name",ner);
-                startActivity(intent);
+                Log.w("MyApp", "Parent" + parent.toString());
+                Log.w("MyApp", "position"+ String.valueOf(position));
+//                all.selected
 
+                Log.w("MyApp", "id"+ "");
+                Log.w("MyApp","");
+//                intent.putExtra("id", String.valueOf(position));
+//                startActivity(intent);
             }
         });
 
 
-    }
-    private class StableArrayAdapter extends ArrayAdapter<String> {
-
-        HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
-
-        public StableArrayAdapter(Context context, int textViewResourceId,
-                                  List<String> objects) {
-            super(context, textViewResourceId, objects);
-            for (int i = 0; i < objects.size(); ++i) {
-                mIdMap.put(objects.get(i), i);
-            }
-        }
     }
 }

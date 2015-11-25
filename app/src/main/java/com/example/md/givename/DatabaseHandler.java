@@ -94,25 +94,21 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
         return nameList;
     }
-    public Cursor ALL(){
-        Cursor cursor = null;
-        try{
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT * FROM "+TABLE_NAME+"";
-         cursor= db.rawQuery(query,null);
-        }
-        catch (Exception ex)
+
+
+        public Cursor getDetails()
         {
-            Log.w("MyApp", ex.toString());
+            SQLiteDatabase db = getReadableDatabase();
+            return db.rawQuery("select "+NAME_ID+" as _id ,"+NAME+" , "+GENDER+" from "+TABLE_NAME+"", null);
         }
-        return  cursor;
-    }
-    public List<Name>selectUser(String gender , String creator , String national){
-        Log.w("MyApp","DB");
-        List<Name>nameList = new ArrayList<Name>();
-        SQLiteDatabase db= this.getReadableDatabase();
+
+
+    public List<Name> selectUser(String gender, String creator, String national) {
+        Log.w("MyApp", "DB");
+        List<Name> nameList = new ArrayList<Name>();
+        SQLiteDatabase db = this.getReadableDatabase();
         try {
-            String query = "SELECT * FROM "+TABLE_NAME+" WHERE GENDER = '"+gender+"' AND CREATOR = '"+creator+"' AND NATIONAL = '"+national+"'";
+            String query = "SELECT * FROM " + TABLE_NAME + " WHERE GENDER = '" + gender + "' AND CREATOR = '" + creator + "' AND NATIONAL = '" + national+"'";
             Cursor cursor = db.rawQuery(query,null);
             Log.w("MyApp",cursor.toString());
             if(cursor.moveToFirst()){

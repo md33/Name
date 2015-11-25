@@ -5,87 +5,85 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.example.md.givename.Find">
+    tools:context="com.example.md.givename.Find"
+    android:background="@drawable/view">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/imageView"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="280dp"
-        android:layout_marginRight="20dp" />
+        android:layout_alignParentTop="false"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="240dp"
+        android:layout_marginTop="50dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Нэр"
-        android:id="@+id/hvis"
-        android:textSize="25dp"
+        android:id="@+id/textView"
+        android:layout_marginStart="42dp"
         android:textStyle="bold"
-        android:layout_marginStart="33dp"
-        android:layout_alignTop="@+id/imageView"
-        android:layout_alignStart="@+id/imageView"
-        android:layout_marginTop="145dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Төрөл"
-        android:id="@+id/ner"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        android:layout_alignTop="@+id/hvis"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="40dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Тайлбар"
-        android:id="@+id/torol"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        android:layout_marginRight="40dp"
-        android:layout_below="@+id/hvis"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="63dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Тайлбаргүй байна"
-        android:id="@+id/comment"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        android:layout_marginRight="40dp"
-        android:layout_below="@+id/torol"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Төрөл"
-        android:id="@+id/type"
-        android:textSize="25dp"
-        android:textStyle="bold"
+        android:textSize="30dp"
         android:layout_centerVertical="true"
-        android:layout_alignEnd="@+id/ner"
-        android:layout_marginRight="-15dp"
-        android:layout_marginTop="5dp" />
+        android:layout_alignStart="@+id/imageView" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Төрөл"
-        android:id="@+id/gender"
-        android:textSize="25dp"
+        android:text="     Төрөл "
+        android:id="@+id/textView2"
         android:textStyle="bold"
-        android:layout_below="@+id/hvis"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="35dp" />
+        android:textSize="30dp"
+        android:layout_alignTop="@+id/textView"
+        android:layout_alignEnd="@+id/imageView"
+        android:layout_marginEnd="43dp"
+        android:layout_marginLeft="50dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Тайлбар "
+        android:id="@+id/textView3"
+        android:textStyle="bold"
+        android:textSize="30dp"
+        android:layout_marginTop="42dp"
+        android:layout_below="@+id/textView2"
+        android:layout_alignEnd="@+id/textView2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Нэр"
+        android:id="@+id/name"
+        android:textSize="30dp"
+        android:layout_below="@+id/textView"
+        android:layout_alignStart="@+id/textView"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="-20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="   Нэр"
+        android:id="@+id/national"
+        android:textSize="30dp"
+        android:layout_alignBottom="@+id/name"
+        android:layout_alignStart="@+id/textView3"
+        android:layout_marginLeft="20dp"
+        android:layout_alignEnd="@+id/comment"
+        android:layout_marginRight="-10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/comment"
+        android:textSize="15dp"
+        android:layout_below="@+id/textView3"
+        android:layout_alignStart="@+id/textView3"
+        android:layout_marginLeft="-25dp"
+        android:layout_marginRight="-10dp"
+        android:minHeight="80dp"
+        android:layout_alignEnd="@+id/textView3" />
 
 </RelativeLayout>
