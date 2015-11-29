@@ -76,7 +76,8 @@ public class View extends Activity {
             vnational.setText(cn.getComment());
             vcomment.setText(cn.getGender());
             genderr = cn.getNational();
-            if (genderr.matches("Male")) {
+            Log.w("MyAp","gender"+cn.getNational());
+            if (genderr.matches("Хүү")) {
                 gender.setImageResource(R.drawable.male);
             } else {
                 gender.setImageResource(R.drawable.female);
@@ -120,10 +121,15 @@ public class View extends Activity {
         builder.setNegativeButton("Үгүй", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                finish();
+                back();
             }
         });
         builder.show();
+    }
+    public void back() {
+        Intent intent = new Intent();
+        intent.setClassName("com.example.md.givename", "com.example.md.givename.Names");
+        startActivity(intent);
     }
 
 }

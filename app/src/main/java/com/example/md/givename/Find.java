@@ -78,6 +78,7 @@ public class Find extends Activity implements SensorEventListener{
 
         List<Name> list = db.selectUser(gender,creator,type);
         names = new ArrayList<String>();
+        Log.i("MyApp",names.toString());
         for (Name name :list){
             names.add(name.getName());
         }
@@ -161,7 +162,7 @@ public class Find extends Activity implements SensorEventListener{
 
     }
     public void result(){
-            final EditText Comment = new EditText(this);
+         Log.w("MyApp","size"+names.size());
             int idx = new Random().nextInt(names.size());
             String random = (names.get(idx));
         state = 0;

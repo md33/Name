@@ -96,7 +96,8 @@
         android:id="@+id/change"
         android:layout_below="@+id/comment"
         android:layout_alignStart="@+id/comment"
-        android:layout_alignEnd="@+id/comment" />
+        android:layout_alignEnd="@+id/comment"
+        android:onClick="onClick"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -105,6 +106,7 @@
         android:id="@+id/back"
         android:layout_below="@+id/change"
         android:layout_alignEnd="@+id/change"
-        android:layout_alignStart="@+id/change" />
+        android:layout_alignStart="@+id/change"
+        android:onClick="onClick"/>
 
 </RelativeLayout>
