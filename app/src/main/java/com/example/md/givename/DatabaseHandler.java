@@ -101,6 +101,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             SQLiteDatabase db = getReadableDatabase();
             return db.rawQuery("select "+NAME_ID+" as _id ,"+NAME+" , "+GENDER+" from "+TABLE_NAME+"", null);
         }
+    public void deleteAll() {
+        System.out.println("Comment deleted all");
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME, null, null);
+    }
+
     public Cursor getDetail()
     {
         SQLiteDatabase db = getReadableDatabase();

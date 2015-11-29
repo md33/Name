@@ -98,7 +98,7 @@ public class Names extends Activity implements  SearchView.OnQueryTextListener{
 
         }
     }
-
+ 
     public void insertFrom() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Нэр нэмэх");
@@ -259,6 +259,7 @@ public class Names extends Activity implements  SearchView.OnQueryTextListener{
                 String named = c.getText().toString();
                 Intent intent = new Intent();
                 intent.setClassName("com.example.md.givename", "com.example.md.givename.View");
+                Log.i("MyApp",named);
                 intent.putExtra("name", named);
                 intent.putExtra("activity", "NAMES");
                 startActivity(intent);

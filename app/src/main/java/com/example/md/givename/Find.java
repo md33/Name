@@ -3,6 +3,7 @@ package com.example.md.givename;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -120,9 +121,9 @@ public class Find extends Activity implements SensorEventListener{
     }
     public String gender(){
         if(gender.getSelectedItem().toString().equals("Хүү"))
-            return "Male";
+            return "Хүү";
         else
-            return "Female";
+            return "Охин";
     }
     public String type(){
         return  type.getSelectedItem().toString();
