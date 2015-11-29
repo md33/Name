@@ -74,6 +74,20 @@ public class Names extends Activity implements  SearchView.OnQueryTextListener{
         all.setTextFilterEnabled(true);
         tabHost = (TabHost) findViewById(R.id.tabHost);
         tabHost.setup();
+        db.InsertName(new Name(name, comment, gender, national, creator));
+        db.InsertName(new Name("Дүвшин", "Гэгээн хувилгаан", "Хүү", "Төвд", "admin"));
+        db.InsertName(new Name("Лхам", "Аз жаргалтай, баян дэлгэр амьдралыг бэлгэдэг", "Охин", "Төвд", "admin"));
+        db.InsertName(new Name("Наряд", "Ажилын гүйцэтгэл гэсэн утгатай. ", "Хүү", "Төвд", "admin"));
+        db.InsertName(new Name("Очир", " Хатуу ширүүн тэмцэгч гэсэн утгатай", "Хүү", "Төвд", "admin"));
+        db.InsertName(new Name("Самбуу", "Сансан бүхэн нь биелэх ерөөлийг бэлгэддэг", "Хүү", "Төвд", "admin"));
+        db.InsertName(new Name("Сүрэн", "Дайчин, шургуу гэсэн утгатай", "Хүү", "Төвд", "admin"));
+        db.InsertName(new Name("Сосор", "Санаа сэтгэл гэсэн утгатай", "Хүү", "Төвд", "admin"));
+        db.InsertName(new Name("Хайдав", "Их гэсэн үгийг илэрхийлдэг", "Хүү", "Төвд", "admin"));
+        db.InsertName(new Name("Цэвэлмаа", "Тайван жаргалт эх гэсэн утгыг агуулна", "Охин", "Төвд", "admin"));
+        db.InsertName(new Name("Цэрмаа", "Энэ нь зоригт дайчин эх гэсэн утгатай", "Охин", "Төвд", "admin"));
+        db.InsertName(new Name("Цэрэн ", " голч, нэгэн үзүүр сэтгэлтэн гэсэн утгатай", "Охин", "Төвд", "admin"));
+        db.InsertName(new Name("Цэнд-Аюуш", "нас уртсаж, өвчин эмгэгээс холуур, байж амьдрал нь өөдрөг явна гэсэн утгатай", "Хүү", "Төвд", "admin"));
+
 
         TabHost.TabSpec spec1 = tabHost.newTabSpec("TAB1");
         spec1.setContent(R.id.listView);
@@ -87,6 +101,7 @@ public class Names extends Activity implements  SearchView.OnQueryTextListener{
         tabHost.addTab(spec2);
         check();
         setupSearchView();
+
 
     }
 
@@ -153,11 +168,17 @@ public class Names extends Activity implements  SearchView.OnQueryTextListener{
                 int named =  db.check_name(Names.getText().toString());
                 Log.w("MyApp","Checkkk"+String.valueOf(name));
 
-                if(name != "" && comment != "")
+                if(name.equals("")&& comment.equals(""))
                 {
 
-                    insert();
+                    Toast toast = Toast.makeText(getApplicationContext(), "Дутуу бөглөсөн байна", Toast.LENGTH_LONG);
 
+                    toast.show();
+
+                }else {
+                    Toast toast = Toast.makeText(getApplicationContext(), "insert", Toast.LENGTH_LONG);
+                    toast.show();
+//                    insert();
                     check();
                 }
 //                }
@@ -179,25 +200,31 @@ public class Names extends Activity implements  SearchView.OnQueryTextListener{
 
     }
 
-    public void insert() {
-        try {
-            db.InsertName(new Name(name, comment, gender, national, creator));
+//    public void insert() {
+//        try {
+//            db.InsertName(new Name(name, comment, gender, national, creator));
+//            Log.w("MyApp",name+ comment + gender + national+creator);
+//
+//        } catch (Exception ex) {
+//            Log.w("MyApp","ada"+ ex.toString());
+//            Toast toast = Toast.makeText(getApplicationContext(), "Амжилттай нэмэгдлээ", Toast.LENGTH_LONG);
+//            toast.show();
+//        }
+//    }
+    public String check_gender() {
+        String gender1=null;
+        if(Male.isChecked() != false || Female.isChecked() !=false) {
+            if (Male.isChecked() == true)
+                gender1 = "Хүү";
+            else
+                gender1 = "Охин";
+        }
+        else {
+            Toast toast = Toast.makeText(getApplicationContext(), "Дутуу бөглөсөн байна", Toast.LENGTH_LONG);
 
-        } catch (Exception ex) {
-            Log.w("MyApp","ada"+ ex.toString());
-            Toast toast = Toast.makeText(getApplicationContext(), "Амжилттай нэмэгдлээ", Toast.LENGTH_LONG);
             toast.show();
         }
-    }
-    public String check_gender() {
-        String gender=null;
-        if(Male.isChecked() != false && Female.isChecked() !=false) {
-            if (Male.isChecked() == true)
-                gender = "Хүү";
-            else
-                gender = "Охин";
-        }
-        return gender;
+        return gender1;
     }
     public void main() {
         Intent intent = new Intent();
@@ -209,6 +236,7 @@ public class Names extends Activity implements  SearchView.OnQueryTextListener{
         Cursor cursor = db.getDetails();
 
         if (cursor != null)
+
 
             adapter =
                     new SimpleCursorAdapter(this,

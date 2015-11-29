@@ -53,15 +53,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         db.close();
     }
-    public int UpdateName(Name name,int id){
+    public void UpdateName( int id ,String name , String comment , String gender, String type){
         SQLiteDatabase db = this.getReadableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(NAME,name.getName());
-        contentValues.put(COMMENT,name.getComment());
-        contentValues.put(GENDER, name.getGender());
-        contentValues.put(NATIONAL, name.getNational());
-        contentValues.put(CREATOR, name.getCreator());
-        return db.update(TABLE_NAME,contentValues,NAME_ID + "=" + id , null);
+        String sql = "UPDATE "+TABLE_NAME+" SET "+NAME+" = '"+name+"' , "+COMMENT+" = '"+comment+"' , "+GENDER+" = '"+gender+"' , "+NATIONAL+" = '"+type+"' WHERE "+NAME_ID+" = '"+id+"'";
+        db.execSQL(sql);
+
     }
     public int DeleteName(  int id){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -120,7 +116,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     Name name = new Name();
                     name.setId(Integer.parseInt(cursor.getString(0)));
                     name.setName(cursor.getString(1));
-
                     name.setGender(cursor.getString(2));
                     name.setNational(cursor.getString(3));
                     name.setComment(cursor.getString(4));
@@ -202,5 +197,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
         db.close();
         return nameList;
+    }
+    public void deleteAll() {
+        System.out.println("Comment deleted all");
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME, null, null);
     }
 }

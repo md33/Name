@@ -1,5 +1,6 @@
 package com.example.md.givename;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,7 @@ public class Edit extends AppCompatActivity {
     String Thisname = null;
     EditText namee, comment;
     String genderr,national;
+    int idd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +33,17 @@ public class Edit extends AppCompatActivity {
         set_spinner();
         set_data();
     }
-
+    public void onClick(android.view.View view){
+        switch (view.getId()){
+            case R.id.back:
+                finish();
+                break;
+            case R.id.edit:
+                db.UpdateName(idd, namee.getText().toString(),comment.getText().toString(),gender.getSelectedItem().toString(),National.getSelectedItem().toString());
+                back();
+                break;
+        }
+    }
     public void set_spinner() {
         ArrayList<String> spinnerArray = new ArrayList<String>();
         spinnerArray.add(0, "Монгол");
@@ -63,6 +75,7 @@ public class Edit extends AppCompatActivity {
             national=cn.getComment();
             comment.setText(cn.getGender());
             genderr = cn.getNational();
+            idd = cn.getId();
             select();
 
         }
@@ -92,5 +105,13 @@ public class Edit extends AppCompatActivity {
         }else if(genderr.equals("Охин")){
             gender.setSelection(1);
         }
+    }
+    public void back() {
+        Intent intent = new Intent();
+        intent.setClassName("com.example.md.givename", "com.example.md.givename.Names");
+        startActivity(intent);
+    }
+    public void update(){
+
     }
 }
