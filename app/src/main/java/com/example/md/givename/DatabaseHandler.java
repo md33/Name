@@ -204,5 +204,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
         return nameList;
     }
-
+    public Cursor find(String finder)
+    {
+        SQLiteDatabase db = getReadableDatabase();
+        return db.rawQuery("select "+NAME_ID+" as _id ,"+NAME+" , "+GENDER+" from "+TABLE_NAME+" WHERE "+NAME+" LIKE '%"+finder+"%' or "+GENDER+" LIKE '%"+finder+"%' or "+NATIONAL+" LIKE '%"+finder+"%'", null);
+    }
 }

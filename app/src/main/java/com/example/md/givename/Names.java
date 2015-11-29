@@ -74,19 +74,6 @@ public class Names extends Activity implements  SearchView.OnQueryTextListener{
         all.setTextFilterEnabled(true);
         tabHost = (TabHost) findViewById(R.id.tabHost);
         tabHost.setup();
-        db.InsertName(new Name(name, comment, gender, national, creator));
-        db.InsertName(new Name("Дүвшин", "Гэгээн хувилгаан", "Хүү", "Төвд", "admin"));
-        db.InsertName(new Name("Лхам", "Аз жаргалтай, баян дэлгэр амьдралыг бэлгэдэг", "Охин", "Төвд", "admin"));
-        db.InsertName(new Name("Наряд", "Ажилын гүйцэтгэл гэсэн утгатай. ", "Хүү", "Төвд", "admin"));
-        db.InsertName(new Name("Очир", " Хатуу ширүүн тэмцэгч гэсэн утгатай", "Хүү", "Төвд", "admin"));
-        db.InsertName(new Name("Самбуу", "Сансан бүхэн нь биелэх ерөөлийг бэлгэддэг", "Хүү", "Төвд", "admin"));
-        db.InsertName(new Name("Сүрэн", "Дайчин, шургуу гэсэн утгатай", "Хүү", "Төвд", "admin"));
-        db.InsertName(new Name("Сосор", "Санаа сэтгэл гэсэн утгатай", "Хүү", "Төвд", "admin"));
-        db.InsertName(new Name("Хайдав", "Их гэсэн үгийг илэрхийлдэг", "Хүү", "Төвд", "admin"));
-        db.InsertName(new Name("Цэвэлмаа", "Тайван жаргалт эх гэсэн утгыг агуулна", "Охин", "Төвд", "admin"));
-        db.InsertName(new Name("Цэрмаа", "Энэ нь зоригт дайчин эх гэсэн утгатай", "Охин", "Төвд", "admin"));
-        db.InsertName(new Name("Цэрэн ", " голч, нэгэн үзүүр сэтгэлтэн гэсэн утгатай", "Охин", "Төвд", "admin"));
-        db.InsertName(new Name("Цэнд-Аюуш", "нас уртсаж, өвчин эмгэгээс холуур, байж амьдрал нь өөдрөг явна гэсэн утгатай", "Хүү", "Төвд", "admin"));
 
 
         TabHost.TabSpec spec1 = tabHost.newTabSpec("TAB1");
@@ -247,8 +234,7 @@ public class Names extends Activity implements  SearchView.OnQueryTextListener{
                             },
                             new int[]{R.id.pp, R.id.dd},
                             1);
-
-
+        all.setAdapter(null);
         all.setAdapter(adapter);
 
         all.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -345,10 +331,40 @@ public class Names extends Activity implements  SearchView.OnQueryTextListener{
 
     @Override
     public boolean onQueryTextChange(String newText) {
+        Log.w("MyApp","newtext : "+newText.toString());
         if (TextUtils.isEmpty(newText)) {
             all.clearTextFilter();
         } else {
-            all.setFilterText(newText.toString());
+            Cursor cursor = db.find(newText.toString());
+
+            if (cursor != null)
+
+
+                adapter =
+                        new SimpleCursorAdapter(this,
+                                R.layout.row,
+                                cursor,
+                                new String[]{
+                                        "NAME", "GENDER"
+                                },
+                                new int[]{R.id.pp, R.id.dd},
+                                1);
+
+            all.setAdapter(null);
+            all.setAdapter(adapter);
+
+            all.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    TextView c = (TextView) view.findViewById(R.id.pp);
+                    String named = c.getText().toString();
+                    Intent intent = new Intent();
+                    intent.setClassName("com.example.md.givename", "com.example.md.givename.View");
+                    intent.putExtra("name", named);
+                    intent.putExtra("activity", "NAMES");
+                    startActivity(intent);
+                }
+            });
         }
         return true;
     }
